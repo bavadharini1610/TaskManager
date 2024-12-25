@@ -15,5 +15,5 @@ public interface TaskRepository {
 
 //    void delete(Task existing);
 
-    List<Task> getTaskByUsername(String username);
+    List<Task> getTaskByUsername(String email);
 }

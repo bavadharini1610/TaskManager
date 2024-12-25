@@ -21,8 +21,8 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody Task task, @AuthenticationPrincipal UserPrincipal userPrincipal){
-        String username = userPrincipal.getUsername();
-        Task newTask = taskService.saveTask(task, username);
+        String email = userPrincipal.getUsername();
+        Task newTask = taskService.saveTask(task, email);
         return newTask;
 
     }
@@ -37,9 +37,10 @@ public class TaskController {
     @GetMapping
     public List<Task> getTasksForCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         // Extract the username from the SecurityContext
-        String username = userPrincipal.getUsername();
-        System.out.println(username);
-        return taskService.getTaskByUsername(username);  // Fetch tasks for the current user
+        String email = userPrincipal.getUsername();
+        System.out.println("email "+email);
+        System.out.println(email);
+        return taskService.getTaskByUsername(email);  // Fetch tasks for the current user
     }
 
 //    @PutMapping("/{id}")
@@ -49,14 +50,14 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id, @RequestBody Task task, @AuthenticationPrincipal UserPrincipal userPrincipal){
-        String username = userPrincipal.getUsername();
-        return taskService.updateTask(id,task,username);
+        String email = userPrincipal.getUsername();
+        return taskService.updateTask(id,task,email);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id, @AuthenticationPrincipal UserPrincipal userPrincipal){
-        String username = userPrincipal.getUsername();
-        taskService.deleteTask(id,username);
+        String email = userPrincipal.getUsername();
+        taskService.deleteTask(id,email);
         return ResponseEntity.ok("task deleted");
     }
 

@@ -50,9 +50,9 @@ public class TaskRepositoryImpl implements TaskRepository{
 //    }
 
     @Override
-    public List<Task> getTaskByUsername(String username) {
-        TypedQuery query = entityManager.createQuery("SELECT t FROM Task t WHERE t.user.username = :username AND t.deleted = false", Task.class);
-        query.setParameter("username", username);
+    public List<Task> getTaskByUsername(String email) {
+        TypedQuery query = entityManager.createQuery("SELECT t FROM Task t WHERE t.user.email = :email AND t.deleted = false", Task.class);
+        query.setParameter("email", email);
         return query.getResultList();
     }
 }

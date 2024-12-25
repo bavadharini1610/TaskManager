@@ -22,12 +22,12 @@ public class TaskServiceImpl implements TaskService {
     UserRepository userRepository;
 
     @Override
-    public Task saveTask(Task task, String username) {
+    public Task saveTask(Task task, String email) {
 
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(email);
 
         if(user.isEmpty()){
-            throw new RuntimeException("user id not found- "+username);
+            throw new RuntimeException("user id not found- "+email);
         }
 
         task.setUser(user.orElse(null));
@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Long id, Task task, String username) {
+    public Task updateTask(Long id, Task task, String email) {
 
         Task existingTask = taskRepository.getById(id);
 
@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         // Check if the user is authorized to update the task
-        if (!existingTask.getUser().getUsername().equals(username)) {
+        if (!existingTask.getUser().getEmail().equals(email)) {
             throw new TaskManagerException("User is not authorized to update this task.");
         }
 
@@ -73,15 +73,15 @@ public class TaskServiceImpl implements TaskService {
         existingTask.setDueDate(task.getDueDate());
 
 
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(email);
         existingTask.setUser(user.orElse(null));
 
         return taskRepository.updateTask(existingTask);
     }
 
     @Override
-    public void deleteTask(Long id, String username) {
-        Optional<User> user = userRepository.findByUsername(username);
+    public void deleteTask(Long id, String email) {
+        Optional<User> user = userRepository.findByUsername(email);
         if (user == null) {
             throw new UserNotFoundException("User not found");
         } else {
@@ -89,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
             if (existing == null) {
                 throw new TaskManagerException("task does not exist");
             }
-            if (!existing.getUser().getUsername().equals(username)) {
+            if (!existing.getUser().getEmail().equals(email)) {
                 throw new TaskManagerException("The user does not have authority to delete");
             }
 
@@ -100,13 +100,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getTaskByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
+    public List<Task> getTaskByUsername(String email) {
+        Optional<User> user = userRepository.findByUsername(email);
         List<Task> taskList;
         if (user == null) {
             throw new UserNotFoundException("User not found with the given id");
         } else {
-            taskList = taskRepository.getTaskByUsername(username);
+            taskList = taskRepository.getTaskByUsername(email);
             if (taskList.isEmpty()) {
                 throw new TaskManagerException("The task for the user is not available");
             }

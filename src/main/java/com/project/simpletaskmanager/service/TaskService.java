@@ -5,13 +5,13 @@ import com.project.simpletaskmanager.entity.Task;
 import java.util.List;
 
 public interface TaskService {
-    Task saveTask(Task task, String username);
+    Task saveTask(Task task, String email);
 
     List<Task> getTaskByUserId(Long userId);
 
-    Task updateTask(Long id, Task task, String username);
+    Task updateTask(Long id, Task task, String email);
 
-    void deleteTask(Long id, String username);
+    void deleteTask(Long id, String email);
 
-    List<Task> getTaskByUsername(String username);
+    List<Task> getTaskByUsername(String email);
 }
