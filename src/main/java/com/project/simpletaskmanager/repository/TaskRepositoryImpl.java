@@ -42,12 +42,6 @@ public class TaskRepositoryImpl implements TaskRepository{
         return entityManager.merge(task);
     }
 
-//    @Override
-//    @Transactional
-//    public void delete(Task existing) {
-//        entityManager.remove(existing);
-//       // entityManager.remove(entityManager.contains(existing) ? existing : entityManager.merge(existing));
-//    }
 
     @Override
     public List<Task> getTaskByUsername(String email) {

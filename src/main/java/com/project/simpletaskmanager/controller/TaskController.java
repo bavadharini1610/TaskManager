@@ -27,13 +27,6 @@ public class TaskController {
 
     }
 
-//    @GetMapping("/user/{userId}")
-//    public List<Task> getTaskByUserId(@PathVariable Long userId){
-//        List<Task> taskList = new ArrayList<>();
-//        taskList=taskService.getTaskByUserId(userId);
-//        return taskList;
-//    }
-
     @GetMapping
     public List<Task> getTasksForCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         // Extract the username from the SecurityContext
@@ -43,10 +36,6 @@ public class TaskController {
         return taskService.getTaskByUsername(email);  // Fetch tasks for the current user
     }
 
-//    @PutMapping("/{id}")
-//    public Task updateTask(@PathVariable Long id, @RequestBody Task task, @RequestParam Long userId){
-//        return taskService.updateTask(id,task,userId);
-//    }
 
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id, @RequestBody Task task, @AuthenticationPrincipal UserPrincipal userPrincipal){
