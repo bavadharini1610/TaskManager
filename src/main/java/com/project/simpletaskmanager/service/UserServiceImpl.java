@@ -68,11 +68,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    @Override
-//    public UserDetails loadUserByEmail(String username) throws UsernameNotFoundException {
-//        return null;
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByUsername(email);
