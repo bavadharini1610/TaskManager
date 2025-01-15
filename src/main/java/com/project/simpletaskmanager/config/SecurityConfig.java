@@ -40,12 +40,13 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/users/login","api/users/register","/")
+                        .requestMatchers("/api/users/login","api/users/register","/", "/v3/api-docs/**",
+                                "/swagger-ui/**", "/swagger-ui.html")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
-                .oauth2Client(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+//                .oauth2Client(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -91,7 +92,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry){
                registry.addMapping("/**")
-                       .allowedOrigins("http://localhost:5000","http://task-management-env.eba-admnmedu.eu-north-1.elasticbeanstalk.com")
+                       .allowedOrigins("http://localhost:5000","http://localhost:8080","http://task-management-env.eba-admnmedu.eu-north-1.elasticbeanstalk.com")
                        .allowedMethods("GET","POST","PUT","DELETE")
                        .allowedHeaders("*")
                        .allowCredentials(true);

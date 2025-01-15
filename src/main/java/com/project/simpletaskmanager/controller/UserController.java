@@ -2,6 +2,9 @@ package com.project.simpletaskmanager.controller;
 
 import com.project.simpletaskmanager.entity.User;
 import com.project.simpletaskmanager.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,6 +23,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Register a new user", description = "Create a new user account with a unique username and email")
     @PostMapping("/register")
     public User registerUser(@RequestBody User user){
         User newUser =  userService.registerUser(user);
